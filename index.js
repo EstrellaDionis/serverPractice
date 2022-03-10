@@ -42,6 +42,18 @@ app.get("/dogs", (req, res) => {
   res.send("Woof!");
 });
 
+//this is for the query string which is part of the URL and it comes AFTER the question mark (?)
+//localhost:9000/search?q=dogs&color=red
+//^ example of what the looks like. You can construct one easily on
+//POSTMAN with the query parameters passed in with key value pairs
+app.get("/search", (req, res) => {
+  const { q } = req.query;
+  if (!q) {
+    res.send(`NOTHING FOUND IF NOTHING SEARCHED!`);
+  }
+  res.send(`<h1>Search results for: ${q}</h1>`);
+});
+
 app.get("*", (req, res) => {
   res.send("I dont know that path!");
 });
