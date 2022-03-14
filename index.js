@@ -52,7 +52,8 @@ app.post("/cats", (req, res) => {
 });
 
 app.get("/cats", (req, res) => {
-  res.send("Meow!");
+  const cats = ["Blue", "Rocket", "Monty", "Stephanie", "Winston"];
+  res.render("cats", { cats });
 });
 
 app.get("/dogs", (req, res) => {
