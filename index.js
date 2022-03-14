@@ -1,6 +1,7 @@
 const { response } = require("express");
 const express = require("express");
 const app = express();
+const path = require("path");
 // console.dir(app);
 
 // app.use((req, res) => {
@@ -8,8 +9,16 @@ const app = express();
 //   res.send("Hello, we got your request! This is the response!");
 // });
 
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "/views"));
+//This ^ is saying that, no matter where we are in the directory, I want you to append /views
+//the reason we do this is because if we start the server and it does not start at index.js
+//the default path where the home.ejs is, will NOT load
+
+//we do not need to say home.ejs because the view engine (in app.set) was set to ejs
+//we also dont need to say view/ because the default place it looks whenever we call res.render is views (IF IT EXISTS)
 app.get("/", (req, res) => {
-  res.send("This is the home page!");
+  res.render("home");
 });
 
 //req.params is specifically the subreddit that we're searching for.
