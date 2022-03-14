@@ -2,12 +2,13 @@ const { response } = require("express");
 const express = require("express");
 const app = express();
 const path = require("path");
-// console.dir(app);
+const redditData = require("./data.json");
 
-// app.use((req, res) => {
-//   console.log("We got a new request!");
-//   res.send("Hello, we got your request! This is the response!");
-// });
+//here were are doing like we did with path.join(__dirname, '/views')
+//this is linking our css style sheet as a default path no matter where we open this project
+//this is connecting to the public directory which contains our
+//app.css file
+app.use(express.static(path.join(__dirname, "public")));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
@@ -16,7 +17,7 @@ app.set("views", path.join(__dirname, "/views"));
 //the default path where the home.ejs is, will NOT load
 
 //we do not need to say home.ejs because the view engine (in app.set) was set to ejs
-//we also dont need to say view/ because the default place it looks whenever we call res.render is views (IF IT EXISTS)
+//we also dont need to say /view because the default place it looks whenever we call res.render is views (IF IT EXISTS)
 app.get("/", (req, res) => {
   res.render("home");
 });
@@ -32,9 +33,18 @@ app.get("/random", (req, res) => {
 //req.params is specifically the subreddit that we're searching for.
 //you can see everything inside of the req object with console.log(req)
 app.get("/r/:subreddit", (req, res) => {
-  console.log(req.params);
   const { subreddit } = req.params;
-  res.send(`<h1>Browsing the ${subreddit} subreddit`);
+  //the [subreddit] is to specific which subreddit you want!
+  //If you don't include this, you will get ALL data
+  //the [subreddit] is being extracted from the { subreddit } from the req.params!!!!
+  const data = redditData[subreddit];
+  console.log(data);
+  if (data) {
+    //if you do not spread the data, you cannot extract the specific pieces you want
+    res.render("subreddit", { ...data });
+  } else {
+    res.render("notfound", { subreddit });
+  }
 });
 
 //the colon is declaring a VARIABLE. These can be named ANYTHING BUT,
