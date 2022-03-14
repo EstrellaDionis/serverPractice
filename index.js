@@ -47,6 +47,7 @@ app.get("/dogs", (req, res) => {
 //^ example of what the looks like. You can construct one easily on
 //POSTMAN with the query parameters passed in with key value pairs
 app.get("/search", (req, res) => {
+  console.log(req.query);
   const { q } = req.query;
   if (!q) {
     res.send(`NOTHING FOUND IF NOTHING SEARCHED!`);
