@@ -21,6 +21,14 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
+//instead of creating the logic in the html
+//you can create the logic here and then pass the variable to the ejs
+//very similar to props if not the exact thing in a different way
+app.get("/random", (req, res) => {
+  const num = Math.floor(Math.random() * 10) + 1;
+  res.render("random", { random: num });
+});
+
 //req.params is specifically the subreddit that we're searching for.
 //you can see everything inside of the req object with console.log(req)
 app.get("/r/:subreddit", (req, res) => {
