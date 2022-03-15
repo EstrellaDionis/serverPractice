@@ -34,7 +34,7 @@ app.get("/random", (req, res) => {
 //you can see everything inside of the req object with console.log(req)
 app.get("/r/:subreddit", (req, res) => {
   const { subreddit } = req.params;
-  //the [subreddit] is to specific which subreddit you want!
+  //the [subreddit] is to specify which subreddit you want!
   //If you don't include this, you will get ALL data
   //the [subreddit] is being extracted from the { subreddit } from the req.params!!!!
   const data = redditData[subreddit];
