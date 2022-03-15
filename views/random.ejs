@@ -1,21 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Random</title>
-  </head>
-  <body>
-    <h1>Your random number is: <%= random %></h1>
-    <% if(random % 2 === 0){ %>
-    <h2>That is an even number!</h2>
-    <% } else { %>
-    <h2>That is an odd number!</h2>
-    <% } %>
-    <h3><%= random%2===0 ? 'EVEN' : 'ODD' %></h3>
-  </body>
-</html>
+<%- include('partials/head') %>
 
-<!-- when using ejs you must have the tags on the parts that involve
+<body>
+  <%- include('partials/navbar') %>
+  <h1>Your random number is: <%= random %></h1>
+  <% if(random % 2 === 0){ %>
+  <h2>That is an even number!</h2>
+  <% } else { %>
+  <h2>That is an odd number!</h2>
+  <% } %>
+  <h3><%= random%2===0 ? 'EVEN' : 'ODD' %></h3>
+  <%- include('partials/footer')%>
+
+  <!-- when using ejs you must have the tags on the parts that involve
 javascript or else, it will crash -->
+</body>
