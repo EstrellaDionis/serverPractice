@@ -4,6 +4,29 @@ const app = express();
 const path = require("path");
 const redditData = require("./data.json");
 
+const comments = [
+  {
+    username: "Todd",
+    comment: "lol that is so funny!",
+  },
+  {
+    username: "Skyler",
+    comment: "I like to go birdwatching with my dog",
+  },
+  {
+    username: "Sk8erBoi",
+    comment: "Plz delete your account, Todd",
+  },
+  {
+    username: "onlysayswoof",
+    comment: "woof woof woof",
+  },
+];
+
+app.get("/comments", (req, res) => {
+  res.render("comments/index", { comments });
+});
+
 //here were are doing like we did with path.join(__dirname, '/views')
 //this is linking our css style sheet as a default path no matter where we open this project
 //this is connecting to the public directory which contains our
