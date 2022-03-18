@@ -57,10 +57,19 @@ app.get("/comments/:id", (req, res) => {
   const comment = comments.find((c) => c.id === id);
   res.render("comments/details", { comment });
 });
+
 app.post("/comments", (req, res) => {
   const { username, comment } = req.body;
   comments.push({ username, comment, id: uuid() });
   console.log(req.body);
+  res.redirect("/comments");
+});
+
+app.patch("/comments/:id", (req, res) => {
+  const { id } = req.params; //grabbing the id from the url
+  const newCommentText = req.body.comment; //grabbing whatever was sent to the req.body.comment payload
+  const foundComment = comments.find((c) => c.id === id); //we then find the comment with that i.d
+  foundComment.comment = newCommentText; //we then update that comment, it's comment property to be whatever was in the req.body.comment
   res.redirect("/comments");
 });
 
