@@ -4,6 +4,7 @@ const req = require("express/lib/request");
 const app = express();
 const path = require("path");
 const redditData = require("./data.json");
+const methodOverride = require("method-override");
 const { v4: uuid } = require("uuid");
 
 //here were are doing like we did with path.join(__dirname, '/views')
@@ -20,6 +21,9 @@ app.set("views", path.join(__dirname, "/views"));
 
 //urlencoded is taking the data from the form into the url and parse it which is what allows us to see the console.log in /comments
 app.use(express.urlencoded({ extended: true }));
+
+app.use(methodOverride("_method")); //this is from the method-override package and it allows ejs to override forms to actuall handle delete and updates.
+//Example of this is currently in edit.ejs in form method and action
 
 const comments = [
   {
@@ -56,6 +60,12 @@ app.get("/comments/:id", (req, res) => {
   const { id } = req.params;
   const comment = comments.find((c) => c.id === id);
   res.render("comments/details", { comment });
+});
+
+app.get("/comments/:id/edit", (req, res) => {
+  const { id } = req.params;
+  const comment = comments.find((c) => c.id === id);
+  res.render("comments/edit", { comment });
 });
 
 app.post("/comments", (req, res) => {
