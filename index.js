@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method")); //this is from the method-override package and it allows ejs to override forms to actuall handle delete and updates.
 //Example of this is currently in edit.ejs in form method and action
 
-const comments = [
+let comments = [
   {
     id: uuid(),
     username: "Todd",
@@ -80,6 +80,12 @@ app.patch("/comments/:id", (req, res) => {
   const newCommentText = req.body.comment; //grabbing whatever was sent to the req.body.comment payload
   const foundComment = comments.find((c) => c.id === id); //we then find the comment with that i.d
   foundComment.comment = newCommentText; //we then update that comment, it's comment property to be whatever was in the req.body.comment
+  res.redirect("/comments");
+});
+
+app.delete("/comments/:id", (req, res) => {
+  const { id } = req.params; //grabbing the id from the url
+  comments = comments.filter((c) => c.id !== id);
   res.redirect("/comments");
 });
 
