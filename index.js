@@ -4,6 +4,7 @@ const req = require("express/lib/request");
 const app = express();
 const path = require("path");
 const redditData = require("./data.json");
+const { v4: uuid } = require("uuid");
 
 //here were are doing like we did with path.join(__dirname, '/views')
 //this is linking our css style sheet as a default path no matter where we open this project
@@ -22,22 +23,22 @@ app.use(express.urlencoded({ extended: true }));
 
 const comments = [
   {
-    id: 1,
+    id: uuid(),
     username: "Todd",
     comment: "lol that is so funny!",
   },
   {
-    id: 2,
+    id: uuid(),
     username: "Skyler",
     comment: "I like to go birdwatching with my dog",
   },
   {
-    id: 3,
+    id: uuid(),
     username: "Sk8erBoi",
     comment: "Plz delete your account, Todd",
   },
   {
-    id: 4,
+    id: uuid(),
     username: "onlysayswoof",
     comment: "woof woof woof",
   },
@@ -53,12 +54,12 @@ app.get("/comments/new", (req, res) => {
 
 app.get("/comments/:id", (req, res) => {
   const { id } = req.params;
-  const comment = comments.find((c) => c.id === parseInt(id));
+  const comment = comments.find((c) => c.id === id);
   res.render("comments/details", { comment });
 });
 app.post("/comments", (req, res) => {
   const { username, comment } = req.body;
-  comments.push({ username, comment });
+  comments.push({ username, comment, id: uuid() });
   console.log(req.body);
   res.redirect("/comments");
 });
