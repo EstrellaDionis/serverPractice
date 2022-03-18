@@ -1,8 +1,24 @@
 const { response } = require("express");
 const express = require("express");
+const req = require("express/lib/request");
 const app = express();
 const path = require("path");
 const redditData = require("./data.json");
+
+//here were are doing like we did with path.join(__dirname, '/views')
+//this is linking our css style sheet as a default path no matter where we open this project
+//this is connecting to the public directory which contains our
+//app.css file
+app.use(express.static(path.join(__dirname, "public")));
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "/views"));
+//This ^ is saying that, no matter where we are in the directory, I want you to append /views
+//the reason we do this is because if we start the server and it does not start at index.js
+//the default path where the home.ejs is, will NOT load
+
+//urlencoded is taking the data from the form into the url and parse it which is what allows us to see the console.log in /comments
+app.use(express.urlencoded({ extended: true }));
 
 const comments = [
   {
@@ -27,17 +43,16 @@ app.get("/comments", (req, res) => {
   res.render("comments/index", { comments });
 });
 
-//here were are doing like we did with path.join(__dirname, '/views')
-//this is linking our css style sheet as a default path no matter where we open this project
-//this is connecting to the public directory which contains our
-//app.css file
-app.use(express.static(path.join(__dirname, "public")));
+app.get("/comments/new", (req, res) => {
+  res.render("comments/new");
+});
 
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "/views"));
-//This ^ is saying that, no matter where we are in the directory, I want you to append /views
-//the reason we do this is because if we start the server and it does not start at index.js
-//the default path where the home.ejs is, will NOT load
+app.post("/comments", (req, res) => {
+  const { username, comment } = req.body;
+  comments.push({ username, comment });
+  console.log(req.body);
+  res.send("it works!");
+});
 
 //we do not need to say home.ejs because the view engine (in app.set) was set to ejs
 //we also dont need to say /view because the default place it looks whenever we call res.render is views (IF IT EXISTS)
