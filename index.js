@@ -51,7 +51,7 @@ app.post("/comments", (req, res) => {
   const { username, comment } = req.body;
   comments.push({ username, comment });
   console.log(req.body);
-  res.send("it works!");
+  res.redirect("/comments");
 });
 
 //we do not need to say home.ejs because the view engine (in app.set) was set to ejs
