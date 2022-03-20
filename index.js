@@ -140,7 +140,7 @@ app.get("/cats", (req, res) => {
 });
 
 app.get("/dogs", (req, res) => {
-  res.send("Woof!");
+  res.send("Woof! Bark! Woof!");
 });
 
 //this is for the query string which is part of the URL and it comes AFTER the question mark (?)
